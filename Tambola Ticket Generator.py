@@ -3,6 +3,7 @@ import numpy as np
 import pandas as pd
 import itertools
 import random
+from tabulate import tabulate
 
 
 def generate_ticket():
@@ -62,12 +63,51 @@ def generate_ticket():
         else:
             matrix[i].insert(0,'  ')
             
-    ticket = pd.DataFrame(np.array(matrix).T)
-    ticket.rename(columns = {i:j for i,j in zip(range(0,9), ['']*9)}, inplace = True)
-    ticket.rename(index = {i:j for i,j in zip(range(0,3), ['']*3)}, inplace = True )
-    
+    ticket = tabulate(np.array(matrix).T, tablefmt = "fancy_grid", numalign="center")
     #Getting ticket
-    return(ticket)
 
+    print(ticket)
+
+
+#Generate individual ticket
+generate_ticket()
+
+
+###Multiple ticket generation
+
+#Dictionary of players with number of tickets
+play_tickets = {'Anuj': 0,
+                'Aanchal':2,
+                 'Nishi': 1,
+                 'Ayush': 1,
+                 'Sangeeta': 1,
+                 'Alka': 2,
+                 'Esha': 2,
+                 'Mohit': 1,
+                 'Rachna': 1,
+                 'Preeti': 1,
+                 'Richa': 1,
+                 'Misty': 1,
+                 'Ajay': 2,
+                 'Anisha': 1,
+                 'Siddhant': 2,
+                 'Aastha': 2,
+                 'Jyoti': 2,
+                 'Akash': 1}
+
+
+#Takes dictionary as an argument
+def generate_tickets(play_tickets):
     
-    
+    for i in play_tickets:
+        for j in range(play_tickets[i]):
+            
+            if play_tickets[i]>1:
+                print('\n',i,j+1)
+                ticket()
+            else:
+                print('\n',i)
+                ticket()
+
+#Generate multiple tickets
+generate_tickets(play_tickets)
